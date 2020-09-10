@@ -1,7 +1,7 @@
 export interface IHttpHeaders {
   has(name: string): boolean;
 
-  append<T>(name: string, value: string | string[]): T;
+  append(name: string, value: string | string[]): any;
 
-  set<T>(name: string, value: string | string[]): T;
+  set(name: string, value: string | string[]): any;
 }

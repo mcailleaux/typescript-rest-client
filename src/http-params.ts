@@ -1,5 +1,5 @@
 export interface IHttpParams {
-  append<T>(param: string, value: string): T;
+  append(param: string, value: string): any;
 
-  set<T>(param: string, value: string): T;
+  set(param: string, value: string): any;
 }
