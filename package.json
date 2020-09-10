@@ -1,8 +1,11 @@
 {
   "name": "typescript-rest-client",
-  "version": "1.0.3-SNAPSHOT",
+  "version": "1.0.4-SNAPSHOT",
   "description": "Generic HTTP client with Typescript Declarative Annotations, Observables, Interceptors and Timeouts.",
   "main": "index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "tslint --project .",
     "build": "tsc"
