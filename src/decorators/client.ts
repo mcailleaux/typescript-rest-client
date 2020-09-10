@@ -19,7 +19,7 @@ export function Client(args: {
     body: any,
     init: { headers: any; params: any; withCredentials: boolean }
   ) => IHttpRequest;
-  newHttpHeaders: (defaultHeaders?: Object) => IHttpHeaders;
+  newHttpHeaders: (defaultHeaders?: { [name: string]: string }) => IHttpHeaders;
 }) {
   return <T extends Function>(Target: T): T => {
     if (args.serviceId != null) {

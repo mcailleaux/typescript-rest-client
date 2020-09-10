@@ -21,7 +21,7 @@ export class RestClient {
     return null;
   }
 
-  public getDefaultHeaders(): Object {
+  public getDefaultHeaders(): { [name: string]: string } {
     return null;
   }
 
@@ -38,7 +38,9 @@ export class RestClient {
     return null;
   }
 
-  public getNewHttpHeaders(defaultHeaders?: Object): IHttpHeaders {
+  public getNewHttpHeaders(defaultHeaders?: {
+    [name: string]: string;
+  }): IHttpHeaders {
     return null;
   }
 
