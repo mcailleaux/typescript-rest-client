@@ -1,6 +1,6 @@
 {
   "name": "typescript-rest-client",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "1.0.0",
   "description": "Generic HTTP client with Typescript Declarative Annotations, Observables, Interceptors and Timeouts.",
   "main": "index.js",
   "scripts": {
