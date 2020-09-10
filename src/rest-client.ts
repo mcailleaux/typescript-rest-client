@@ -1,16 +1,17 @@
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { IHttpClient } from './http-client';
+import { Observable } from 'rxjs';
+import { IHttpParams } from './http-params';
+import { IHttpRequest } from './http-request';
+import { IHttpHeaders } from './http-headers';
 
 /**
- * Angular 4 RestClient class.
+ * Generic RestClient class.
  *
  * @class RestClient
  * @constructor
  */
 export class RestClient {
-
-  public constructor(private httpClient: HttpClient) {
-  }
+  public constructor(public httpClient: IHttpClient) {}
 
   public getServiceId(): string {
     return null;
@@ -18,19 +19,36 @@ export class RestClient {
 
   public getBaseUrl(): string {
     return null;
-  };
+  }
 
   public getDefaultHeaders(): Object {
     return null;
-  };
+  }
+
+  public getNewHttpParams(): IHttpParams {
+    return null;
+  }
+
+  public getNewHttpRequest(
+    method: string,
+    resUrl: string,
+    body: any,
+    init: { headers: any; params: any; withCredentials: boolean }
+  ): IHttpRequest {
+    return null;
+  }
+
+  public getNewHttpHeaders(defaultHeaders?: Object): IHttpHeaders {
+    return null;
+  }
 
   /**
    * Request Interceptor
    *
    * @method requestInterceptor
-   * @param {HttpRequest} req - request object
+   * @param {T} req - request object
    */
-  protected requestInterceptor(req: HttpRequest<any>):void {
+  protected requestInterceptor<T>(req: T): void {
     //
   }
 
@@ -38,11 +56,10 @@ export class RestClient {
    * Response Interceptor
    *
    * @method responseInterceptor
-   * @param {HttpResponse} res - response object
-   * @returns {any} res - transformed response object
+   * @param {T} res - response object
+   * @returns {Observable} res - transformed response object
    */
-  protected responseInterceptor(res: Observable<HttpResponse<any>>): Observable<any> {
+  protected responseInterceptor<T>(res: Observable<T>): Observable<any> {
     return res;
   }
-
 }

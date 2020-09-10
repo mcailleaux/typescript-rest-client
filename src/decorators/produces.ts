@@ -1,25 +1,24 @@
 import { RestClient } from '../rest-client';
-import { HttpResponse } from '@angular/common/http';
+import { IHttpRequest } from '../http-request';
 
 /**
  * Defines the media type(s) that the methods can produce
- * @param MediaType media type or custom mapper function
+ * @param {MediaType} mime type or custom mapper function
  */
-export function Produces(mime:MediaType) {
-  return function(target: RestClient, propertyKey: string, descriptor: any) {
-    if(mime !== undefined) {
+export function Produces(mime: MediaType) {
+  return (target: RestClient, propertyKey: string, descriptor: any) => {
+    if (mime != null) {
       if (mime === MediaType.JSON) {
-        descriptor.mime = (res:HttpResponse<any>) => res.body;
+        descriptor.mime = (res: IHttpRequest) => res.body;
       }
     }
     return descriptor;
   };
 }
 
-
 /**
  * Supported @Produces media types
  */
 export enum MediaType {
-  JSON
+  JSON,
 }
