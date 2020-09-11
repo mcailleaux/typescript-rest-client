@@ -9,9 +9,9 @@ import { IHttpRequest } from '../http-request';
 import { IHttpHeaders } from '../http-headers';
 
 export function Client(args: {
-  serviceId?: string;
-  baseUrl?: string;
-  headers?: any;
+  serviceId?: () => string;
+  baseUrl?: () => string;
+  headers?: () => any;
   newHttpParams: () => IHttpParams;
   newHttpRequest: (
     method: string,
@@ -23,19 +23,13 @@ export function Client(args: {
 }) {
   return <T extends Function>(Target: T): T => {
     if (args.serviceId != null) {
-      Target.prototype.getServiceId = () => {
-        return args.serviceId;
-      };
+      Target.prototype.getServiceId = args.serviceId;
     }
     if (args.baseUrl != null) {
-      Target.prototype.getBaseUrl = () => {
-        return args.baseUrl;
-      };
+      Target.prototype.getBaseUrl = args.baseUrl;
     }
     if (args.headers != null) {
-      Target.prototype.getDefaultHeaders = () => {
-        return args.headers;
-      };
+      Target.prototype.getDefaultHeaders = args.headers;
     }
     if (args.newHttpParams != null) {
       Target.prototype.getNewHttpParams = args.newHttpParams;

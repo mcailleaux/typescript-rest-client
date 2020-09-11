@@ -1,6 +1,6 @@
 {
   "name": "typescript-rest-client",
-  "version": "1.0.8-SNAPSHOT",
+  "version": "1.0.18-SNAPSHOT",
   "description": "Generic HTTP client with Typescript Declarative Annotations, Observables, Interceptors and Timeouts.",
   "main": "index.js",
   "scripts": {
@@ -23,11 +23,10 @@
     "url": "https://github.com/mcailleaux/typescript-rest-client/issues"
   },
   "homepage": "https://github.com/mcailleaux/typescript-rest-client#readme",
-  "dependencies": {
-    "rxjs": "^6.6.3",
-    "zone.js": "^0.11.1"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "rxjs": "^6.6.3",
+    "zone.js": "^0.11.1",
     "@types/node": "^14.6.4",
     "ts-node": "^9.0.0",
     "typescript": "^3.9.7",

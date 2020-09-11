@@ -6,13 +6,16 @@ import { IHttpHeaders } from '../http-headers';
 import { IHttpRequest } from '../http-request';
 import { IHttpClient } from '../http-client';
 import { map, timeout } from 'rxjs/operators';
+import { ISearch } from '../search';
+import { ISort } from '../sort';
 
 export function methodBuilder(method: string) {
-  return function (url: string) {
-    return function (target: RestClient, propertyKey: string, descriptor: any) {
+  return (url: () => string) => {
+    return (target: RestClient, propertyKey: string, descriptor: any) => {
       const pPath = target[`${propertyKey}_Path_parameters`];
       const pQuery = target[`${propertyKey}_Query_parameters`];
       const pBody = target[`${propertyKey}_Body_parameters`];
+      const pSearch = target[`${propertyKey}_Search_parameters`];
       const pPlainBody = target[`${propertyKey}_PlainBody_parameters`];
       const pHeader = target[`${propertyKey}_Header_parameters`];
 
@@ -40,7 +43,7 @@ export function methodBuilder(method: string) {
           body = value;
         }
         // Path
-        let resUrl: string = url;
+        let resUrl: string = url();
         if (pPath != null) {
           for (const k in pPath) {
             if (pPath.hasOwnProperty(k)) {
@@ -52,7 +55,7 @@ export function methodBuilder(method: string) {
                 resUrl = resUrl.replace('{' + pPath[k].key + '}', value);
               } else {
                 throw new Error(
-                  "Missing path variable '" + pPath[k].key + "' in url " + url
+                  "Missing path variable '" + pPath[k].key + "' in url " + url()
                 );
               }
             }
@@ -70,7 +73,7 @@ export function methodBuilder(method: string) {
         }
 
         // Query
-        let search: IHttpParams = target.getNewHttpParams();
+        let params: IHttpParams = target.getNewHttpParams();
         if (pQuery != null) {
           pQuery
             .filter(
@@ -107,18 +110,53 @@ export function methodBuilder(method: string) {
                 value = JSON.stringify(value);
               }
               if (Array.isArray(value)) {
-                value.forEach((v) => (search = search.append(key, v)));
+                value.forEach((v) => (params = params.append(key, v)));
               } else {
-                search = search.set(key, value);
+                params = params.set(key, value);
               }
             });
+        }
+        if (pSearch != null) {
+          if (pSearch.length > 1) {
+            throw new Error('Only one @Search is allowed');
+          }
+          let search: ISearch = args[pSearch[0].parameterIndex];
+          if (search == null && pSearch[0].value != null) {
+            search = pSearch[0].value;
+          }
+          if (search != null) {
+            const searchParams: any = {};
+            if (search.paginate != null) {
+              searchParams.page = search.paginate.page;
+              searchParams.nbrPerPage = search.paginate.nbrPerPage;
+            }
+
+            if (search.sorts?.length > 0) {
+              searchParams.sortBy = [];
+              search.sorts.forEach((sort: ISort) => {
+                const asc = sort.asc != null && sort.asc ? 'asc' : 'desc';
+                searchParams.sortBy.push(`${sort.path}.${asc}`);
+              });
+            }
+
+            if (search.filter != null) {
+              searchParams.filter = search.filter;
+            }
+
+            for (const [key, value] of Object.entries<string>(searchParams)) {
+              if (value != null) {
+                params = params.set(key, value);
+              }
+            }
+          }
         }
 
         // Headers
         // set class default headers
-        let headers: IHttpHeaders = target.getNewHttpHeaders(
-          this.getDefaultHeaders()
-        );
+        let headers: IHttpHeaders = target.getNewHttpHeaders({
+          ...{ 'content-type': 'application/json' },
+          ...this.getDefaultHeaders(),
+        });
 
         // set method specific headers
         for (const k in descriptor.headers) {
@@ -176,8 +214,8 @@ export function methodBuilder(method: string) {
           body,
           {
             headers: headers,
-            params: search,
-            withCredentials: true,
+            params: params,
+            withCredentials: false,
           }
         );
 
@@ -189,9 +227,11 @@ export function methodBuilder(method: string) {
         )).request(req);
 
         // transform the observable in accordance to the @Produces decorator
-        if (descriptor.mime != null) {
-          observable = observable.pipe(map(descriptor.mime));
+        if (descriptor.mime == null) {
+          descriptor.mime = (res: IHttpRequest) => res.body;
         }
+        observable = observable.pipe(map(descriptor.mime));
+
         if (descriptor.timeout != null) {
           descriptor.timeout.forEach((tout: number) => {
             observable = observable.pipe(timeout(tout));

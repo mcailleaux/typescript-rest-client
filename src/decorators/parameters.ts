@@ -100,3 +100,9 @@ export const PlainBody = paramBuilder('PlainBody')('PlainBody');
  * @param {string} key - header key to bind value
  */
 export const Header = paramBuilder('Header');
+
+/**
+ * Query search params of a REST method, type: ISearch object
+ * Only one search per method!
+ */
+export const Search = paramBuilder('Search')('Search');
