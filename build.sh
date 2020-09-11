@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Delete dist
 rm -fR dist
