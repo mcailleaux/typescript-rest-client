@@ -9,7 +9,8 @@ export function Produces(mime: MediaType) {
   return (target: RestClient, propertyKey: string, descriptor: any) => {
     if (mime != null) {
       if (mime === MediaType.JSON) {
-        descriptor.mime = (res: IHttpRequest) => res.body;
+        descriptor.mime = (res: IHttpRequest) =>
+          target.defaultResponseBody(res);
       }
     }
     return descriptor;

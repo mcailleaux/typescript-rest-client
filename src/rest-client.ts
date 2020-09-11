@@ -44,6 +44,10 @@ export class RestClient {
     return null;
   }
 
+  public defaultResponseBody(res: any) {
+    return null;
+  }
+
   /**
    * Request Interceptor
    *

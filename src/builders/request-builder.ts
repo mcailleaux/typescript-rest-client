@@ -228,7 +228,8 @@ export function methodBuilder(method: string) {
 
         // transform the observable in accordance to the @Produces decorator
         if (descriptor.mime == null) {
-          descriptor.mime = (res: IHttpRequest) => res.body;
+          descriptor.mime = (res: IHttpRequest) =>
+            target.defaultResponseBody(res);
         }
         observable = observable.pipe(map(descriptor.mime));
 

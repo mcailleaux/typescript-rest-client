@@ -20,6 +20,7 @@ export function Client(args: {
     init: { headers: any; params: any; withCredentials: boolean }
   ) => IHttpRequest;
   newHttpHeaders: (defaultHeaders?: { [name: string]: string }) => IHttpHeaders;
+  defaultResponseBody: (res) => any;
 }) {
   return <T extends Function>(Target: T): T => {
     if (args.serviceId != null) {
@@ -39,6 +40,9 @@ export function Client(args: {
     }
     if (args.newHttpHeaders != null) {
       Target.prototype.getNewHttpHeaders = args.newHttpHeaders;
+    }
+    if (args.defaultResponseBody != null) {
+      Target.prototype.defaultResponseBody = args.defaultResponseBody;
     }
     return Target;
   };
