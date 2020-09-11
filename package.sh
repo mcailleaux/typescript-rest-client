@@ -5,5 +5,4 @@ set -e
 sh ./build.sh
 
 # Publish dist
-cd dist
 npm publish --access public
