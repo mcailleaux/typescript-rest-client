@@ -1,0 +1,33 @@
+image: docker-repository-no.asi.fr/asi/ci-builder-node10:1.0
+
+stages:
+  - build
+  - quality
+  - publish
+  - release
+
+variables:
+  GIT_STRATEGY: fetch
+
+build:
+  extends: .build
+
+quality:
+  stage: quality
+  script:
+    - npm run lint
+  artifacts:
+    paths:
+      - dist
+
+.build:
+  stage: build
+  before_script:
+    - npm ci --unsafe-perm
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - node_modules
+      - dist
+    expire_in: 1 day
