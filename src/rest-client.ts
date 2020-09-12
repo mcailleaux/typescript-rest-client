@@ -44,7 +44,7 @@ export class RestClient {
     return null;
   }
 
-  public defaultResponseBody(res: any) {
+  public defaultResponseBody(res: any): any {
     return null;
   }
 

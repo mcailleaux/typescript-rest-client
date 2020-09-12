@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/app/model/user';
 import {
   HttpClient,
   HttpEventType,
@@ -8,7 +7,6 @@ import {
   HttpParams,
   HttpRequest,
 } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import {
   Body,
   Client,
@@ -20,6 +18,8 @@ import {
   RestClient,
 } from 'typescript-rest-client';
 import { v4 as uuidV4 } from 'uuid';
+import { environment } from '@environments';
+import { IUser } from '@model/user';
 
 @Injectable({
   providedIn: 'root',
