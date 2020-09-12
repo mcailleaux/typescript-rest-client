@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+.dev {
+  @import 'theme/dev';
+}
+
+.re7 {
+  @import 'theme/re7';
+}
+
+.prod {
+  @import 'theme/prod';
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}

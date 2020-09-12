@@ -5,7 +5,7 @@ import { IHttpParams } from '../http-params';
 import { IHttpHeaders } from '../http-headers';
 import { IHttpRequest } from '../http-request';
 import { IHttpClient } from '../http-client';
-import { map, timeout } from 'rxjs/operators';
+import { map, skipWhile, timeout } from 'rxjs/operators';
 import { ISearch } from '../search';
 import { ISort } from '../sort';
 
@@ -226,10 +226,14 @@ export function methodBuilder(method: string) {
           this.httpClient
         )).request(req);
 
+        // Skip response conditions
+        observable = observable.pipe(
+          skipWhile((res) => target.skipResponse(res))
+        );
+
         // transform the observable in accordance to the @Produces decorator
         if (descriptor.mime == null) {
-          descriptor.mime = (res: IHttpRequest) =>
-            target.defaultResponseBody(res);
+          descriptor.mime = (res: any) => target.defaultResponseBody(res);
         }
         observable = observable.pipe(map(descriptor.mime));
 

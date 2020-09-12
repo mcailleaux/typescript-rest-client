@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+    <a color="primary" mat-raised-button [routerLink]="'./create'">
+      {{ 'Créer un utilisateur' }}
+    </a>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+  >
+    <mat-list>
+      <mat-list-item *ngFor="let user of users$ | async">
+        <p mat-line>
+          {{ user.firstName + ' ' + user.lastName + ' (' + user.age + ' ans)' }}
+        </p>
+        <button mat-icon-button color="primary">
+          <mat-icon (click)="edit(user)"> edit </mat-icon>
+        </button>
+        <button mat-icon-button color="primary">
+          <mat-icon (click)="delete(user)"> delete </mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

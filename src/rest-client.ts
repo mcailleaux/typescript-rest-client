@@ -48,6 +48,10 @@ export class RestClient {
     return null;
   }
 
+  public skipResponse(res: any): boolean {
+    return false;
+  }
+
   /**
    * Request Interceptor
    *

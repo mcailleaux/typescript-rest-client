@@ -1,0 +1,46 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+  <h2>Créer un utilisateur</h2>
+
+  <form [formGroup]="formGroup" (ngSubmit)="saveUser()">
+    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <mat-form-field appearance="outline" color="primary">
+        <mat-label>Prénom</mat-label>
+        <input
+          [(ngModel)]="user.firstName"
+          matInput
+          placeholder="Prénom de l'utilisateur"
+          [formControl]="firstname"
+          required
+        />
+        <mat-error *ngIf="firstname.invalid">Prénom obligatoire </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="primary">
+        <mat-label>Nom</mat-label>
+        <input
+          [(ngModel)]="user.lastName"
+          matInput
+          placeholder="Nom de l'utilisateur"
+          [formControl]="lastname"
+          required
+        />
+        <mat-error *ngIf="lastname.invalid">Nom obligatoire</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="primary">
+        <mat-label>Age</mat-label>
+        <input
+          [(ngModel)]="user.age"
+          type="number"
+          step="1"
+          matInput
+          placeholder="Age de l'utilisateur"
+          [formControl]="age"
+          required
+        />
+        <mat-error *ngIf="age.invalid">Age obligatoire</mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">
+        Enregistrer
+      </button>
+    </div>
+  </form>
+</div>
