@@ -3,7 +3,7 @@ export const environment = {
   config: {
     theme: 'prod',
     apis: {
-      rootUrl: 'http://10.9.6.125:11083',
+      rootUrl: 'http://prod:3000',
     },
   },
 };

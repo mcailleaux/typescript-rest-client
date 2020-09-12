@@ -21,7 +21,7 @@ export function Client(args: {
   ) => IHttpRequest;
   newHttpHeaders: (defaultHeaders?: { [name: string]: string }) => IHttpHeaders;
   defaultResponseBody: (res) => any;
-  skipResponse: (res) => boolean;
+  skipResponse?: (res) => boolean;
 }) {
   return <T extends Function>(Target: T): T => {
     if (args.serviceId != null) {
