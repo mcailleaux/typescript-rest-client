@@ -3,7 +3,7 @@ image: docker-repository-no.asi.fr/asi/ci-builder-node14:1.0
 stages:
   - build
   - quality
-  - publish + release
+  - publish_release
 
 variables:
   GIT_STRATEGY: fetch
@@ -20,7 +20,7 @@ quality:
       - dist
 
 publish:
-  stage: publish
+  stage: publish_release
   script:
     - sh ./package.sh
   rules:
@@ -55,7 +55,7 @@ release_major:
     expire_in: 1 day
 
 .release:
-  stage: release
+  stage: publish_release
   when: manual
   script:
     - /scripts/release.sh $VERSION
