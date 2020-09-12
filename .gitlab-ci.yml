@@ -3,7 +3,7 @@ image: docker-repository-no.asi.fr/asi/ci-builder-node14:1.0
 stages:
   - build
   - quality
-  - publish + realease
+  - publish + release
 
 variables:
   GIT_STRATEGY: fetch
