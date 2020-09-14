@@ -17,6 +17,8 @@ npm install typescript-rest-client --save
 
 ## Example with Angular
 
+This lib allow you to use an @Client preconfigured for angular : https://www.npmjs.com/package/typescript-angular-rest-client
+
 ```ts
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -110,6 +112,8 @@ export class UserService extends RestClient {
 ```
 
 ## Example with Nest
+
+This lib allow you to use an @Client preconfigured for nest : https://www.npmjs.com/package/typescript-nest-rest-client
 
 ```ts
 import { Observable } from 'rxjs';
